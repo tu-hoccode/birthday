@@ -1,638 +1,207 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thiệp Sinh Nhật Siêu Cute</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Indie+Flower&display=swap"
-        rel="stylesheet">
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow-x: hidden;
-            font-family: 'Comic Neue', cursive;
-            background: #fff0f5;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            touch-action: manipulation;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, #ffd6e7, #ffc0cb, #ffb6c1);
-            z-index: -3;
-        }
-
-        .bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: floatBubble 15s infinite linear;
-            z-index: -1;
-            will-change: transform;
-        }
-
-        @keyframes floatBubble {
-            0% {
-                transform: translateY(100vh) scale(0.5);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.8;
-            }
-
-            90% {
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: translateY(-100px) scale(1.2);
-                opacity: 0;
-            }
-        }
-
-        .hearts {
-            position: absolute;
-            font-size: 0;
-            opacity: 0;
-            animation: heartFloat 6s infinite;
-            z-index: -1;
-            will-change: transform;
-        }
-
-        @keyframes heartFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-                font-size: 0;
-            }
-
-            10% {
-                opacity: 1;
-                font-size: 20px;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-                font-size: 30px;
-            }
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #f00;
-            opacity: 0;
-            z-index: -1;
-            animation: confettiFall 5s linear infinite;
-            will-change: transform;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(255, 240, 245, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 10;
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .open-button {
-            background: #ff85a2;
-            border: none;
-            padding: 12px 30px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.5);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-top: 30px;
-            transform: scale(0.9);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.9);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(0.9);
-            }
-        }
-
-        .open-button:hover {
-            background: #ff6b8b;
-            transform: scale(1.05);
-        }
-
-        .open-button:before {
-            content: "❤️";
-            position: absolute;
-            left: -20px;
-            animation: flyHeart 3s infinite;
-        }
-
-        @keyframes flyHeart {
-            0% {
-                transform: translateX(0) translateY(0);
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateX(100px) translateY(-50px);
-                opacity: 0;
-            }
-        }
-
-        .welcome-text {
-            color: #ff1493;
-            font-size: 28px;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
-            position: relative;
-            font-weight: bold;
-            padding: 0 20px;
-        }
-
-        .welcome-text:before,
-        .welcome-text:after {
-            content: "🌸";
-            position: absolute;
-            font-size: 20px;
-            animation: twinkle 1.5s infinite alternate;
-        }
-
-        .welcome-text:before {
-            left: 0;
-            top: -10px;
-        }
-
-        .welcome-text:after {
-            right: 0;
-            bottom: -10px;
-        }
-
-        @keyframes twinkle {
-            from {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
-
-        .invitation-card {
-            position: fixed;
-            width: 85vw;
-            height: 75vh;
-            max-width: 320px;
-            max-height: 480px;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(255, 105, 140, 0.3);
-            padding: 20px;
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 20;
-            transform: scale(0.8);
-            opacity: 0;
-            border: 4px dotted #ff85a2;
-            background-image:
-                radial-gradient(circle at 10px 10px, #fff0f5 3px, transparent 4px),
-                radial-gradient(circle at 30px 30px, #fff0f5 3px, transparent 4px);
-            background-size: 50px 50px;
-            overflow: hidden;
-        }
-
-        .invitation-card.show {
-            display: flex;
-            animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes cardAppear {
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .card-header {
-            text-align: center;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .card-header h1 {
-            font-family: 'Indie Flower', cursive;
-            font-size: 36px;
-            color: #ff69b4;
-            margin: 0;
-            text-shadow: 2px 2px 0px rgba(255, 240, 245, 0.8);
-        }
-
-        .card-header .date {
-            font-size: 24px;
-            color: #ff85a2;
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
-        .card-header:after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, transparent, #ff85a2, transparent);
-            margin: 12px auto;
-            border-radius: 2px;
-        }
-
-        .card-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .card-content p {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #c71585;
-            margin: 10px 0;
-            text-align: center;
-            position: relative;
-            padding: 5px 0;
-        }
-
-        .card-content p:before {
-            content: "✨";
-            position: absolute;
-            left: -20px;
-            color: #ff69b4;
-            animation: twinkle 1.5s infinite alternate;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #ff1493;
-            text-decoration: underline wavy #ffb6c1;
-        }
-
-        .location {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #db7093;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff0f5;
-            padding: 10px;
-            border-radius: 50px;
-            position: relative;
-            font-size: 16px;
-        }
-
-        .location:before {
-            content: "🍕";
-            margin-right: 8px;
-            font-size: 20px;
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from {
-                transform: translateY(0) rotate(-15deg);
-            }
-
-            to {
-                transform: translateY(-5px) rotate(15deg);
-            }
-        }
-
-        .signature {
-            margin-top: 20px;
-            text-align: right;
-            font-family: 'Indie Flower', cursive;
-            font-size: 28px;
-            color: #ff69b4;
-            position: relative;
-        }
-
-        .signature small {
-            font-family: 'Comic Neue', cursive;
-            font-size: 14px;
-            color: #ff85a2;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .sticker {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: #fff0f5;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            border: 3px dashed #ff85a2;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .sticker-1 {
-            top: -25px;
-            right: -25px;
-            background: #ffd1dc;
-            animation-delay: 0.2s;
-        }
-
-        .sticker-2 {
-            bottom: -25px;
-            left: -25px;
-            background: #ffdfea;
-            animation-delay: 0.4s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animal {
-            position: absolute;
-            font-size: 30px;
-            animation: float 4s ease-in-out infinite;
-            z-index: -1;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
-        }
-
-        .cake {
-            position: absolute;
-            font-size: 40px;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 1.5s infinite alternate;
-            z-index: -1;
-        }
-
-        /* Responsive cho tablet */
-        @media (min-width: 600px) {
-            .invitation-card {
-                width: 320px;
-                height: 480px;
-                padding: 30px;
-            }
-
-            .card-header h1 {
-                font-size: 42px;
-            }
-
-            .card-content p {
-                font-size: 18px;
-            }
-
-            .animal {
-                font-size: 40px;
-            }
-
-            .cake {
-                font-size: 50px;
-            }
-        }
-
-        /* Tắt hiệu ứng nếu thiết bị giảm motion */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thiệp Sinh Nhật</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffebee;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      touch-action: manipulation;
+      overflow: hidden;
+    }
+    
+    .container {
+      width: 95%;
+      max-width: 400px;
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(255, 105, 140, 0.2);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ff85a2;
+    }
+    
+    h1 {
+      color: #e91e63;
+      margin-bottom: 15px;
+      font-size: 28px;
+    }
+    
+    p {
+      color: #c2185b;
+      margin: 10px 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .highlight {
+      color: #d81b60;
+      font-weight: bold;
+    }
+    
+    .location {
+      background: #fce4ec;
+      padding: 10px;
+      border-radius: 50px;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+    
+    .signature {
+      font-style: italic;
+      margin-top: 20px;
+      color: #e91e63;
+    }
+    
+    .open-btn {
+      background: #ff4081;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+    }
+    
+    /* Hiệu ứng đơn giản */
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float 4s infinite;
+      opacity: 0;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    /* Màn hình chờ */
+    .welcome-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 235, 238, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    
+    .welcome-text {
+      font-size: 24px;
+      color: #e91e63;
+      margin-bottom: 30px;
+      text-align: center;
+      padding: 0 20px;
+    }
+  </style>
 </head>
-
 <body>
-
-    <div class="background"></div>
-
-    <!-- Bong bóng -->
-    <div class="bubble" style="left: 10%; width: 30px; height: 30px; animation-delay: 0s;"></div>
-    <div class="bubble" style="left: 30%; width: 40px; height: 40px; animation-delay: 2s;"></div>
-    <div class="bubble" style="left: 70%; width: 35px; height: 35px; animation-delay: 4s;"></div>
-
-    <!-- Thú cute -->
-    <div class="animal" style="top: 10%; left: 10%;">🐇</div>
-    <div class="animal" style="top: 80%; left: 80%;">🐻‍❄️</div>
-    <div class="animal" style="top: 70%; left: 15%;">🐱</div>
-    <div class="animal" style="top: 20%; left: 75%;">🦄</div>
-
-    <div class="cake">🎂</div>
-
-    <div class="overlay" id="intro">
-        <div class="welcome-text">Chờ Chút Nè...<br>Có Điều Bất Ngờ Nè!</div>
-        <button class="open-button" onclick="openCard()">Bấm Vào Đi Nà ❤️</button>
+  <!-- Màn hình chờ -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-text">Chờ chút nè...<br>Có điều bất ngờ dành cho bạn!</div>
+    <button class="open-btn" onclick="openCard()">Mở thiệp</button>
+  </div>
+  
+  <!-- Thiệp chính -->
+  <div class="container" id="card" style="display: none;">
+    <h1>Thiệp Mời Sinh Nhật</h1>
+    <p>Bạn thân mến!</p>
+    <p>Ngày <span class="highlight">23/08</span> này là sinh nhật mình đó!</p>
+    <p>Mong bạn đến chung vui cùng mình nhé!</p>
+    
+    <div class="location">
+      🎂 Pizza Hut Nguyễn Gia Trí - 18:00
     </div>
-
-    <div class="invitation-card" id="invitation">
-        <div class="sticker sticker-1">💝</div>
-        <div class="sticker sticker-2">🎊</div>
-
-        <div class="card-header">
-            <h1>Thiệp Mời</h1>
-            <div class="date">23.08 🎉</div>
-        </div>
-
-        <div class="card-content">
-            <p>Bạn iu dấu ơi!</p>
-            <p>Ngày <span class="highlight">23/08</span> tới là sinh nhật mình đó!</p>
-            <p>Nhớ đến chung vui với mình nhaaa~</p>
-
-            <div class="location">Pizza Hut Nguyễn Gia Trí</div>
-        </div>
-
-        <div class="signature">
-            <small>Gửi bạn thân,</small>
-            Phương Châu
-        </div>
+    
+    <p>Hẹn gặp bạn ở đó!</p>
+    
+    <div class="signature">
+      <small>Gửi bạn thân,</small><br>
+      Phương Châu
     </div>
+  </div>
 
-    <!-- Nhạc nền -->
-    <audio id="bgMusic" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-188.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="happySound">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-celebration-464.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Nhạc nền -->
+  <audio id="bgMusic" loop>
+    <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-188.mp3" type="audio/mpeg">
+  </audio>
 
-    <script>
-        // Tạo trái tim bay
-        function createHearts() {
-            if (document.querySelectorAll('.hearts').length > 20) return;
-
-            const heart = document.createElement('div');
-            heart.className = 'hearts';
-            heart.innerHTML = ['❤️', '💖', '💗', '💓', '💞', '💕', '💘', '💝'][Math.floor(Math.random() * 8)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.bottom = '-20px';
-            heart.style.animationDelay = Math.random() * 2 + 's';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
-
-        // Tạo bong bóng
-        function createBubbles() {
-            if (document.querySelectorAll('.bubble').length > 15) return;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 30 + 20;
-            bubble.style.width = size + 'px';
-            bubble.style.height = size + 'px';
-            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
-            document.body.appendChild(bubble);
-
-            setTimeout(() => {
-                bubble.remove();
-            }, 20000);
-        }
-
-        // Tạo confetti
-        function createConfetti() {
-            const colors = ['#ff1493', '#ff69b4', '#ff85a2', '#ffb6c1', '#ffc0cb', '#ffd6e7'];
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-            confetti.style.width = Math.random() * 8 + 4 + 'px';
-            confetti.style.height = Math.random() * 8 + 4 + 'px';
-            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-            document.body.appendChild(confetti);
-
-            setTimeout(() => {
-                confetti.remove();
-            }, 5000);
-        }
-
-        // Kiểm tra thiết bị di động
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-        // Mở thiệp
-        function openCard() {
-            // Phát nhạc
-            const music = document.getElementById('bgMusic');
-            music.volume = 0.3;
-            music.play().catch(e => console.log("Auto-play prevented: ", e));
-
-            // Phát âm thanh vui nhộn
-            const happySound = document.getElementById('happySound');
-            happySound.volume = 0.4;
-            happySound.play().catch(e => console.log("Sound effect error: ", e));
-
-            // Hiệu ứng
-            const effectInterval = isMobile() ? 800 : 300;
-            setInterval(createHearts, effectInterval);
-            setInterval(createConfetti, isMobile() ? 150 : 80);
-
-            document.getElementById('intro').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro').style.display = 'none';
-                document.getElementById('invitation').classList.add('show');
-            }, 500);
-        }
-
-        // Khởi tạo
-        document.addEventListener('DOMContentLoaded', () => {
-            const bubbleInterval = setInterval(createBubbles, isMobile() ? 2000 : 1000);
-            const heartInterval = setInterval(createHearts, isMobile() ? 1000 : 500);
-
-            // Tạm dừng hiệu ứng khi tab không active
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    clearInterval(bubbleInterval);
-                    clearInterval(heartInterval);
-                }
-            });
-        });
-    </script>
+  <script>
+    // Chỉ hiển thị trên mobile
+    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      document.body.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <h2 style="color: #e91e63;">Thiệp chỉ dành cho điện thoại</h2>
+          <p>Vui lòng mở bằng điện thoại để xem thiệp</p>
+        </div>
+      `;
+    }
+    
+    // Tạo trái tim bay
+    function createHearts() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
+    }
+    
+    // Mở thiệp
+    function openCard() {
+      // Phát nhạc (sau khi có tương tác người dùng)
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.3;
+      music.play().catch(e => {
+        console.log("Bật nhạc thủ công nếu không nghe thấy");
+      });
+      
+      // Hiệu ứng trái tim
+      setInterval(createHearts, 300);
+      
+      // Hiển thị thiệp
+      document.getElementById('welcomeScreen').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('welcomeScreen').style.display = 'none';
+        document.getElementById('card').style.display = 'block';
+      }, 500);
+    }
+    
+    // Tự động tạo một vài trái tim khi tải trang
+    window.onload = function() {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(createHearts, i * 300);
+      }
+    };
+  </script>
 </body>
-
 </html>
