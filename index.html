@@ -36,66 +36,22 @@
             border: 3px solid #ff85a2;
         }
 
-        /* Nơ trang trí */
-        .ribbon {
+        /* Nơ trang trí bằng emoji */
+        .bow {
             position: absolute;
-            width: 100px;
-            height: 100px;
-            overflow: hidden;
-            z-index: 1;
+            font-size: 40px;
+            z-index: 2;
         }
         
-        .ribbon-top-right {
-            top: -10px;
-            right: -10px;
+        .bow-top {
+            top: -15px;
+            right: -15px;
         }
         
-        .ribbon-bottom-left {
-            bottom: -10px;
-            left: -10px;
-        }
-        
-        .ribbon::before,
-        .ribbon::after {
-            content: '';
-            position: absolute;
-            border: 5px solid #ff4081;
-            border-radius: 10px;
-        }
-        
-        .ribbon::before {
-            width: 40px;
-            height: 30px;
-            background: #ff85a2;
-        }
-        
-        .ribbon::after {
-            width: 15px;
-            height: 15px;
-            background: #ff4081;
-            border-radius: 50%;
-        }
-        
-        .ribbon-top-right::before {
-            transform: rotate(45deg);
-            right: -25px;
-            top: 25px;
-        }
-        
-        .ribbon-top-right::after {
-            right: -5px;
-            top: 15px;
-        }
-        
-        .ribbon-bottom-left::before {
-            transform: rotate(45deg);
-            left: -25px;
-            bottom: 25px;
-        }
-        
-        .ribbon-bottom-left::after {
-            left: -5px;
-            bottom: 15px;
+        .bow-bottom {
+            bottom: -15px;
+            left: -15px;
+            transform: rotate(180deg);
         }
 
         h1 {
@@ -203,9 +159,9 @@
 
     <!-- Thiệp chính -->
     <div class="container" id="card" style="display: none;">
-        <!-- Nơ trang trí -->
-        <div class="ribbon ribbon-top-right"></div>
-        <div class="ribbon ribbon-bottom-left"></div>
+        <!-- Nơ trang trí bằng emoji -->
+        <div class="bow bow-top">🎀</div>
+        <div class="bow bow-bottom">🎀</div>
         
         <h1>Thiệp Mời Sinh Nhật</h1>
         <p>Bạn thân mến!</p>
@@ -213,13 +169,13 @@
         <p>Mong bạn đến chung vui cùng mình nhé!</p>
 
         <div class="location">
-            🎂 Pizza Hut, Nguyễn Gia Trí - 18:00
+            🎂 Pizza Hut Nguyễn Gia Trí - 18:00
         </div>
 
         <p>Hẹn gặp bạn ở đó!</p>
 
         <div class="signature">
-            <small>Người gửi</small><br>
+            <small>Ký tên,</small><br>
             Phương Châu
         </div>
     </div>
