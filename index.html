@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Sinh Nhật Siêu Cute</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Indie+Flower&display=swap"
+        rel="stylesheet" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Comic Neue", cursive;
+            background: #fff0f5;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #ffd6e7, #ffc0cb, #ffb6c1);
+            z-index: -3;
+        }
+
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatBubble 15s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .hearts {
+            position: absolute;
+            font-size: 0;
+            opacity: 0;
+            animation: heartFloat 6s infinite;
+            z-index: -1;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+                font-size: 0;
+            }
+
+            10% {
+                opacity: 1;
+                font-size: 20px;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+                font-size: 30px;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: -1;
+            animation: confettiFall 5s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 240, 245, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .open-button {
+            background: #ff85a2;
+            border: none;
+            padding: 15px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+            transform: scale(0.9);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(0.9);
+            }
+        }
+
+        .open-button:hover {
+            background: #ff6b8b;
+            transform: scale(1.05);
+        }
+
+        .open-button:before {
+            content: "❤️";
+            position: absolute;
+            left: -20px;
+            animation: flyHeart 3s infinite;
+        }
+
+        @keyframes flyHeart {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(100px) translateY(-50px);
+                opacity: 0;
+            }
+        }
+
+        .welcome-text {
+            color: #ff1493;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+            position: relative;
+            font-weight: bold;
+        }
+
+        .welcome-text:before,
+        .welcome-text:after {
+            content: "🌸";
+            position: absolute;
+            font-size: 24px;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        .welcome-text:before {
+            left: -40px;
+            top: -10px;
+        }
+
+        .welcome-text:after {
+            right: -40px;
+            bottom: -10px;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .invitation-card {
+            position: fixed;
+            width: 320px;
+            height: 480px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 105, 140, 0.3);
+            padding: 30px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 20;
+            transform: scale(0.8);
+            opacity: 0;
+            border: 4px dotted #ff85a2;
+            background-image: radial-gradient(circle at 10px 10px,
+                    #fff0f5 3px,
+                    transparent 4px),
+                radial-gradient(circle at 30px 30px, #fff0f5 3px, transparent 4px);
+            background-size: 50px 50px;
+        }
+
+        .invitation-card.show {
+            display: flex;
+            animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .card-header h1 {
+            font-family: "Indie Flower", cursive;
+            font-size: 48px;
+            color: #ff69b4;
+            margin: 0;
+            text-shadow: 2px 2px 0px rgba(255, 240, 245, 0.8);
+        }
+
+        .card-header .date {
+            font-size: 28px;
+            color: #ff85a2;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .card-header:after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right,
+                    transparent,
+                    #ff85a2,
+                    transparent);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #c71585;
+            margin: 12px 0;
+            text-align: center;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .card-content p:before {
+            content: "✨";
+            position: absolute;
+            left: -25px;
+            color: #ff69b4;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #ff1493;
+            text-decoration: underline wavy #ffb6c1;
+        }
+
+        .location {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #db7093;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff0f5;
+            padding: 12px;
+            border-radius: 50px;
+            position: relative;
+            font-size: 18px;
+        }
+
+        .location:before {
+            content: "🍕";
+            margin-right: 8px;
+            font-size: 24px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0) rotate(-15deg);
+            }
+
+            to {
+                transform: translateY(-5px) rotate(15deg);
+            }
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-family: "Indie Flower", cursive;
+            font-size: 32px;
+            color: #ff69b4;
+            position: relative;
+        }
+
+        .signature small {
+            font-family: "Comic Neue", cursive;
+            font-size: 16px;
+            color: #ff85a2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .sticker {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #fff0f5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            border: 3px dashed #ff85a2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sticker-1 {
+            top: -35px;
+            right: -35px;
+            background: #ffd1dc;
+            animation-delay: 0.2s;
+        }
+
+        .sticker-2 {
+            bottom: -35px;
+            left: -35px;
+            background: #ffdfea;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .animal {
+            position: absolute;
+            font-size: 50px;
+            animation: float 4s ease-in-out infinite;
+            z-index: -1;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .cake {
+            position: absolute;
+            font-size: 60px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 1.5s infinite alternate;
+            z-index: -1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: gold;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            animation: balloonFloat 15s linear infinite;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        @keyframes balloonFloat {
+            0% {
+                transform: translateY(100vh) scale(0.3);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .balloon:before {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: #333;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <!-- Bong bóng -->
+    <div class="bubble" style="left: 10%; width: 40px; height: 40px; animation-delay: 0s"></div>
+    <div class="bubble" style="left: 30%; width: 60px; height: 60px; animation-delay: 2s"></div>
+    <div class="bubble" style="left: 70%; width: 50px; height: 50px; animation-delay: 4s"></div>
+
+    <!-- Thú cute -->
+    <div class="animal" style="top: 10%; left: 10%">🐇</div>
+    <div class="animal" style="top: 80%; left: 80%">🐻‍❄️</div>
+    <div class="animal" style="top: 70%; left: 15%">🐱</div>
+    <div class="animal" style="top: 20%; left: 75%">🦄</div>
+
+    <div class="cake">🎂</div>
+
+    <div class="overlay" id="intro">
+        <div class="welcome-text">Chờ Chút Nè...<br />Có Điều Bất Ngờ Nè!</div>
+        <button class="open-button" onclick="openCard()">Bấm Vào Đi Nà ❤️</button>
+    </div>
+
+    <div class="invitation-card" id="invitation">
+        <div class="sticker sticker-1">💝</div>
+        <div class="sticker sticker-2">🎊</div>
+
+        <div class="card-header">
+            <h1>Thiệp Mời</h1>
+            <div class="date">23.08 🎉</div>
+        </div>
+
+        <div class="card-content">
+            <p>Bạn iu dấu ơi!</p>
+            <p>
+                Ngày <span class="highlight">23/08</span> tới là sinh nhật mình đó!
+            </p>
+            <p>Nhớ đến chung vui với mình nhaaa~</p>
+
+            <div class="location">Pizza Hut Nguyễn Gia Trí</div>
+        </div>
+
+        <div class="signature">
+            <small>Gửi bạn thân,</small>
+            Phương Châu
+        </div>
+    </div>
+
+    <!-- Nhạc nền -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="happySound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-celebration-464.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+        // Tạo trái tim bay
+        function createHearts() {
+            const heart = document.createElement("div");
+            heart.className = "hearts";
+            heart.innerHTML = ["❤️", "💖", "💗", "💓", "💞", "💕", "💘", "💝"][
+                Math.floor(Math.random() * 8)
+            ];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.bottom = "-20px";
+            heart.style.animationDelay = Math.random() * 2 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Tạo bong bóng
+        function createBubbles() {
+            const bubble = document.createElement("div");
+            bubble.className = "bubble";
+            bubble.style.left = Math.random() * 100 + "vw";
+            bubble.style.width = Math.random() * 50 + 30 + "px";
+            bubble.style.height = bubble.style.width;
+            bubble.style.animationDuration = Math.random() * 10 + 10 + "s";
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 20000);
+        }
+
+        // Tạo confetti
+        function createConfetti() {
+            const colors = [
+                "#ff1493",
+                "#ff69b4",
+                "#ff85a2",
+                "#ffb6c1",
+                "#ffc0cb",
+                "#ffd6e7",
+            ];
+            const confetti = document.createElement("div");
+            confetti.className = "confetti";
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+            confetti.style.width = Math.random() * 10 + 5 + "px";
+            confetti.style.height = Math.random() * 10 + 5 + "px";
+            confetti.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Tạo sparkle
+        function createSparkle() {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDelay = Math.random() * 0.5 + "s";
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Tạo bóng bay
+        function createBalloon() {
+            const colors = ["#ff1493", "#ff69b4", "#ff85a2", "#ffb6c1", "#ffc0cb"];
+            const balloon = document.createElement("div");
+            balloon.className = "balloon";
+            balloon.style.left = Math.random() * 100 + "vw";
+            balloon.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+            balloon.style.animationDuration = Math.random() * 10 + 10 + "s";
+            document.body.appendChild(balloon);
+
+            setTimeout(() => {
+                balloon.remove();
+            }, 20000);
+        }
+
+        // Mở thiệp
+        function openCard() {
+            // Phát nhạc
+            const music = document.getElementById("bgMusic");
+            music.volume = 0.3;
+            music.play();
+
+            // Phát âm thanh vui nhộn
+            const happySound = document.getElementById("happySound");
+            happySound.volume = 0.5;
+            happySound.play();
+
+            // Hiệu ứng trái tim
+            setInterval(createHearts, 200);
+
+            // Hiệu ứng confetti
+            setInterval(createConfetti, 100);
+
+            // Hiệu ứng sparkle
+            setInterval(createSparkle, 50);
+
+            // Hiệu ứng bóng bay
+            setInterval(createBalloon, 800);
+
+            document.getElementById("intro").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("intro").style.display = "none";
+                document.getElementById("invitation").classList.add("show");
+            }, 500);
+        }
+
+        // Khởi tạo
+        document.addEventListener("DOMContentLoaded", () => {
+            setInterval(createBubbles, 1000);
+            setInterval(createHearts, 500);
+        });
+    </script>
+</body>
+
+</html>
